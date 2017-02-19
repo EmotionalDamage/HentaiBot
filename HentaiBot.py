@@ -10,7 +10,7 @@ def get_list():
     sauce = get(
         "https://www.hentaihaven.org",
         headers = {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
+            "user-agent": "HentaiBot (https://github.com/NightShadeNeko/HentaiBot)"
         })
     if sauce.status_code != 200:
         print("Error: {}\n\n{}".format(sauce.status_code, sauce.content))
