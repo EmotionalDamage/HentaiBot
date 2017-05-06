@@ -3,16 +3,17 @@ from bs4.element import Tag as BSTag
 from requests import get, post
 from yaml import load, dump
 from json import dumps as jdump
+from sys import exit as sysexit
 
 with open("config.yaml") as file:
     data = load(file)
     token = data["token"]
     if token == "":
         print("No token written in the config.yaml file")
-        return 0
+        sysexit()
     if len(data["channels"]) == 0:
         print("No channels written in the config.yaml file")
-        return 0
+        sysexit()
 base_url = "https://discordapp.com/api"
 
 def get_list():
