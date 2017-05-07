@@ -74,10 +74,11 @@ def get_list():
             first_name = name
         limit_counter += 1
     if first_name != "" and first_name != end_name:
-        with open("config.yaml", "w") as file:
+        with open("config.yaml", "r+") as file:
             file.write(dump({
                 "last_name" : first_name,
                 "channels" : channels,
+                "token" : load(file)["token"]
             }))
     return embs, channels
 
