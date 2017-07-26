@@ -1,7 +1,7 @@
 # HentaiBot
 Well... a bot that checks HentaiHaven.org for new hentai and if it finds a new one, sends the info as a message to a Discord channel(s)
 
-It uses the RSS feed at www.hentaihaven.org/feed\[WARNING: NSFW] to check for new releases, if it finds a new one then it will send a discord message to the channels specified in the config.yaml file.
+It uses the RSS feed at www.hentaihaven.org/feed \[WARNING: NSFW] to check for new releases, if it finds a new one then it will send a discord message to the channels specified in the config.yaml file.
 
 # Dependencies:
 - feedparser  (For reading the RSS feed)
