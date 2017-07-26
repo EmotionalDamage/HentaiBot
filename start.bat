@@ -1,3 +1,4 @@
 @echo off
-python hentaibot.py
+cd %~dp0
+python hentaibot2.py
 pause
