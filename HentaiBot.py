@@ -6,13 +6,11 @@ from requests import post
 import xml.etree.ElementTree as ET
 BASE_URL = "https://discordapp.com/api"
 
-# ---------
 def get_from_summary(summary):
     root = ET.fromstring(f"<element>{summary}</element>")
     d = f"{root[1].text}\n\n{root[2].text}"
     i = root[0].attrib["src"]
     return (d, i)
-# ---------
 
 #Get data from config file
 with open("config.yaml") as file:
@@ -26,7 +24,6 @@ with open("config.yaml") as file:
     if len(channels) == 0:
         print("No channels written in the config.yaml file")
         sysexit()
-#~~~~token, end_name, channels~~~~~
 
 #Get items from the RSS feed
 x = feedparser.parse("http://hentaihaven.org/feed").entries
@@ -38,7 +35,6 @@ for i in range(len(x)):
     else:
         new_items.append(x[i])
         counter += 1
-#~~~~token, channels~~~~~~~~~
 
 #The RSS Items will be turned into embedded objects
 new_embs = []
