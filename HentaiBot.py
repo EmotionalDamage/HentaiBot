@@ -6,11 +6,13 @@ from requests import post
 import xml.etree.ElementTree as ET
 BASE_URL = "https://discordapp.com/api"
 
+# ---------
 def get_from_summary(summary):
     root = ET.fromstring(f"<element>{summary}</element>")
     d = f"{root[1].text}\n\n{root[2].text}"
     i = root[0].attrib["src"]
     return (d, i)
+# ---------
 
 #Get data from config file
 with open("config.yaml") as file:
@@ -62,7 +64,7 @@ if len(new_embs) > 0:
                 headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
             )
         print(sent_msg.content)
-        
+
     #Update config with the newest item
     first_name = new_embs[0]["title"]
     if first_name != end_name:
@@ -74,3 +76,13 @@ if len(new_embs) > 0:
                 }))
 else:
     print("None")
+
+#hentai_irl
+import hentai_irl
+channels, links = hentai_irl.go()
+for ch in channels:
+    post(
+        url = f"{BASE_URL}/channels/{ch}/messages",
+        data = jdump({"content":links}),
+        headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
+    )
