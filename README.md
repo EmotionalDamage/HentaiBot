@@ -26,3 +26,4 @@ e.g. to install "feedparser" write ```pip install feedparser``` in the command p
     <b>NOTE: Your bot must have permission to write in the channel. This done when adding the bot to the Discord server or through roles.</b>
 3. If you wish for the program to do it automatically then look into a way of scheduling a task for your specific OS. (For Windows use Task Scheduler, for Linux use Cron(? haven't used Linux a lot)). Then schedule the execution of the "start.bat" script whenever you wish.
 4. If you wish to run the program manually just, run the "start.bat" script.
+- Tip: just create a shortcut of the start.bat and move it in your autostart folder if you use windows. It will always check for new hentais when you start your pc.
