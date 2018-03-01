@@ -1,3 +1,7 @@
-channels: ['']
-last_name: ""
-token:
+channels: [] # The channel id that you wish to send this to e.g. channels: ['12345', '64789'] (Quotation Marks Necessary)
+token: # e.g. token: 12345 (No Quotation Marks Necessary)
+hentai_irl: {
+  enabled: False, # Set to True if you wish to use the hentai_irl feature
+  posts: 3, # Number of posts to post
+  channels: [] # The channels in the same format as above. Leave empty if you wish to use the same channels.
+}
