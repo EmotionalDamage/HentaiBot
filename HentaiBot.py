@@ -18,14 +18,25 @@ def get_from_summary(summary):
 with open("config.yaml") as file:
     data = load(file)
     token = data["token"]
-    end_name = data["last_name"]
     channels = data["channels"]
+    hentai_irl = data["hentai_irl"]["enabled"]
+    if hentai_irl:
+        hentai_irl_num = data["hentai_irl"]["posts"]
+        hentai_irl_channels = data["hentai_irl"]["channels"]
+        if len(hentai_irl_channels) == 0:
+            hentai_irl_channels = channels
+        if hentai_irl_num < 1:
+            print("The number of hentai_irl posts cannot be less than one")
+            sysexit()
     if token == "":
         print("No token written in the config.yaml file")
         sysexit()
     if len(channels) == 0:
         print("No channels written in the config.yaml file")
         sysexit()
+with open("last_name.txt", encoding='utf-8') as file:
+    end_name = file.read()
+
 
 #Get items from the RSS feed
 x = feedparser.parse("http://hentaihaven.org/feed").entries
@@ -68,21 +79,18 @@ if len(new_embs) > 0:
     #Update config with the newest item
     first_name = new_embs[0]["title"]
     if first_name != end_name:
-        with open("config.yaml", "w") as file:
-                file.write(dump({
-                    "last_name" : first_name,
-                    "channels" : channels,
-                    "token" : token
-                }))
+        with open("last_name.txt", "w", encoding='utf-8') as file:
+                file.write(first_name)
 else:
     print("None")
 
 #hentai_irl
-import hentai_irl
-channels, links = hentai_irl.go()
-for ch in channels:
-    post(
-        url = f"{BASE_URL}/channels/{ch}/messages",
-        data = jdump({"content":links}),
-        headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
-    )
+if hentai_irl:
+    import hentai_irl
+    links = hentai_irl.go(hentai_irl_num)
+    for ch in hentai_irl_channels:
+        post(
+            url = f"{BASE_URL}/channels/{ch}/messages",
+            data = jdump({"content":links}),
+            headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
+        )
