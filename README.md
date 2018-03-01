@@ -2,12 +2,12 @@
 Fork of https://github.com/HiruNya/HentaiBot
 It's the same discord - bot like the HentaiBot, expect it also can search /r/hentai/.
 
-#Source \[ALL NSFW!]:
+# Source \[ALL NSFW!]:
 - https://www.reddit.com/r/hentai_irl/
 - https://www.reddit.com/r/hentai/
 - http://hentaihaven.org/feed/
 
-#Installationguide by HiruNya
+# Installationguide by HiruNya
 # Dependencies:
 - feedparser  (For reading the RSS feed)
 - yaml  (For reading and writing to the config file)
