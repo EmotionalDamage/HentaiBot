@@ -5,3 +5,8 @@ hentai_irl: {
   posts: 3, # Number of posts to post
   channels: [] # The channels in the same format as above. Leave empty if you wish to use the same channels.
 }
+hentai: {
+  enabled: True, # Set to True if you wish to use the hentai_irl feature
+  posts: 3, # Number of posts to post
+  channels: [] # The channels in the same format as above. Leave empty if you wish to use the same channels.
+}
