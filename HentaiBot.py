@@ -86,7 +86,7 @@ if len(new_embs) > 0:
         with open("last_name.txt", "w", encoding='utf-8') as file:
                 file.write(first_name)
 else:
-    print("None")
+    print("No New Entries")
 
 #hentai_irl
 if hentai_irl:
