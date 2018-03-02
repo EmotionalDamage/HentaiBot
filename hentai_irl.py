@@ -4,7 +4,7 @@ from requests import get
 
 def go(num=3):
     response = get(f"https://www.reddit.com/r/hentai_irl/hot/.json?limit={num}",
-                   headers = {'User-agent':'HentaiBot 2'}).json()
+                   headers = {'User-agent':'HentaiBot'}).json()
     items = response['data']["children"]
     links = []
     for i in items:
