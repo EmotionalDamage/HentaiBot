@@ -20,6 +20,7 @@ with open("config.yaml") as file:
     token = data["token"]
     channels = data["channels"]
     hentai_irl = data["hentai_irl"]["enabled"]
+    hentai = data["hentai"]["enabled"]
     if hentai_irl:
         hentai_irl_num = data["hentai_irl"]["posts"]
         hentai_irl_channels = data["hentai_irl"]["channels"]
@@ -28,13 +29,21 @@ with open("config.yaml") as file:
         if hentai_irl_num < 1:
             print("Error! The number of hentai_irl posts cannot be less than one")
             sysexit()
+    if hentai:
+        hentai_num = data["hentai"]["posts"]
+        hentai_channels = data["hentai"]["channels"]
+        if len(hentai_channels) == 0:
+            hentai_channels = channels
+        if hentai_num < 1:
+            print("The number of hentai posts cannot be less than one")
+            sysexit()
     if token == "":
         print("Error! No token written in the config.yaml file")
         sysexit()
     if len(channels) == 0:
         print("Error! No channels written in the config.yaml file")
         sysexit()
-with open("last_name.txt", encoding='utf-8') as file:
+with open("last_name", encoding='utf-8') as file:
     end_name = file.read()
 
 
@@ -83,7 +92,7 @@ if len(new_embs) > 0:
     #Update config with the newest item
     first_name = new_embs[0]["title"]
     if first_name != end_name:
-        with open("last_name.txt", "w", encoding='utf-8') as file:
+        with open("last_name", "w", encoding='utf-8') as file:
                 file.write(first_name)
 else:
     print("No New Entries")
@@ -98,8 +107,19 @@ if hentai_irl:
             data = jdump({"content":links}),
             headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
         )
-        output = f"To Channel: {ch}, Sent {hentai_irl_num} Posts"
+        output = f"To Channel: {ch}, Sent {hentai_irl_num} r/hentai_irl Posts"
         if sent_msg.ok:
             print(f"Success!", output)
         else:
             print(f"Error!", output)
+
+#hentai
+if hentai:
+    import hentai
+    links = hentai.go(hentai_num)
+    for ch in hentai_channels:
+        post(
+            url = f"{BASE_URL}/channels/{ch}/messages",
+            data = jdump({"content":links}),
+            headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
+        )
