@@ -26,13 +26,13 @@ with open("config.yaml") as file:
         if len(hentai_irl_channels) == 0:
             hentai_irl_channels = channels
         if hentai_irl_num < 1:
-            print("The number of hentai_irl posts cannot be less than one")
+            print("Error! The number of hentai_irl posts cannot be less than one")
             sysexit()
     if token == "":
-        print("No token written in the config.yaml file")
+        print("Error! No token written in the config.yaml file")
         sysexit()
     if len(channels) == 0:
-        print("No channels written in the config.yaml file")
+        print("Error! No channels written in the config.yaml file")
         sysexit()
 with open("last_name.txt", encoding='utf-8') as file:
     end_name = file.read()
@@ -74,7 +74,11 @@ if len(new_embs) > 0:
                 data = jdump({"content":"New Hentai Release!", "embed":emb}),
                 headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
             )
-        print(sent_msg.content)
+            output = f"To Channel: {ch},   Sent \'{emb['title']}\'"
+            if sent_msg.ok:
+                print("Success!", output)
+            else:
+                print("Error!", output)
 
     #Update config with the newest item
     first_name = new_embs[0]["title"]
@@ -89,8 +93,13 @@ if hentai_irl:
     import hentai_irl
     links = hentai_irl.go(hentai_irl_num)
     for ch in hentai_irl_channels:
-        post(
+        sent_msg = post(
             url = f"{BASE_URL}/channels/{ch}/messages",
             data = jdump({"content":links}),
             headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
         )
+        output = f"To Channel: {ch}, Sent {hentai_irl_num} Posts"
+        if sent_msg.ok:
+            print(f"Success!", output)
+        else:
+            print(f"Error!", output)
