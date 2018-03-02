@@ -118,8 +118,13 @@ if hentai:
     import hentai
     links = hentai.go(hentai_num)
     for ch in hentai_channels:
-        post(
+        sent_msg = post(
             url = f"{BASE_URL}/channels/{ch}/messages",
             data = jdump({"content":links}),
             headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
         )
+        output = f"To Channel: {ch}, Sent {hentai_num} r/hentai Posts"
+        if sent_msg.ok:
+            print(f"Success!", output)
+        else:
+            print(f"Error!", output)
