@@ -18,29 +18,32 @@ def get_from_summary(summary):
 #Get data from config file
 with open("config.yaml") as file:
     data = load(file)
-    token = data["token"]
+    token = str(data["token"])
     channels = data["channels"]
-    num = data["posts"]
+    num = int(data["posts"])
     hentai_haven = data["hentai_haven"]["enabled"]
     hentai_irl = data["hentai_irl"]["enabled"]
     hentai = data["hentai"]["enabled"]
     if hentai_haven:
-        hentai_haven_num = data["hentai_haven"]["posts"]
+        hentai_haven_num = int(data["hentai_haven"]["posts"])
         hentai_haven_channels = data["hentai_haven"]["channels"]
-        hentai_haven_colour = data["hentai_haven"]["embed_colour"]
+        try:
+            hentai_haven_colour = int(data["hentai_haven"]["embed_colour"])
+        except ValueError:
+            hentai_haven_colour = int(data["hentai_haven"]["embed_colour"], 16)
         if hentai_haven_colour < 0:
             hentai_haven_colour = 16711680
         if len(hentai_haven_channels) == 0:
             hentai_haven_channels = channels
     if hentai_irl:
-        hentai_irl_num = data["hentai_irl"]["posts"]
+        hentai_irl_num = int(data["hentai_irl"]["posts"])
         hentai_irl_channels = data["hentai_irl"]["channels"]
         if len(hentai_irl_channels) == 0:
             hentai_irl_channels = channels
         if hentai_irl_num < 1:
             hentai_irl_num = num
     if hentai:
-        hentai_num = data["hentai"]["posts"]
+        hentai_num = int(data["hentai"]["posts"])
         hentai_channels = data["hentai"]["channels"]
         if len(hentai_channels) == 0:
             hentai_channels = channels
