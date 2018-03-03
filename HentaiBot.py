@@ -52,11 +52,13 @@ x = feedparser.parse("http://hentaihaven.org/feed").entries
 new_items = [] #All the new items will be appended into this list
 counter = 0 #Max limit of 5 items per post
 for i in range(len(x)):
-    if (x[i].title == end_name) or (counter == 5):
+    if (x[i]['id'] == end_name) or (counter == 5):
         break
     else:
         new_items.append(x[i])
         counter += 1
+        if i == 0:
+            first_name = x[0]['id']
 
 #The RSS Items will be turned into embedded objects
 new_embs = []
@@ -90,7 +92,6 @@ if len(new_embs) > 0:
                 print("Error!", output)
 
     #Update config with the newest item
-    first_name = new_embs[0]["title"]
     if first_name != end_name:
         with open("last_name", "w", encoding='utf-8') as file:
                 file.write(first_name)
@@ -107,7 +108,7 @@ if hentai_irl:
             data = jdump({"content":links}),
             headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
         )
-        output = f"To Channel: {ch}, Sent {hentai_irl_num} r/hentai_irl Posts"
+        output = f"To Channel: {ch},    Sent {hentai_irl_num} r/hentai_irl Posts"
         if sent_msg.ok:
             print(f"Success!", output)
         else:
@@ -123,7 +124,7 @@ if hentai:
             data = jdump({"content":links}),
             headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
         )
-        output = f"To Channel: {ch}, Sent {hentai_num} r/hentai Posts"
+        output = f"To Channel: {ch},    Sent {hentai_num} r/hentai Posts"
         if sent_msg.ok:
             print(f"Success!", output)
         else:
