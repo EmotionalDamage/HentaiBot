@@ -96,7 +96,7 @@ if hentai_haven:
                     data = jdump({"content":"New Hentai Release!", "embed":emb}),
                     headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
                 )
-                output = f"To Channel: {ch},   Sent \'{emb['title']}\'"
+                output = f"To Channel: {ch},    Sent \'{emb['title']}\'"
                 if sent_msg.ok:
                     print("Success!", output)
                 else:
