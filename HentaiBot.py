@@ -111,8 +111,8 @@ if hentai_haven:
 
 #hentai_irl
 if hentai_irl:
-    import hentai_irl
-    links = hentai_irl.go(hentai_irl_num)
+    import reddit_api
+    links = reddit_api.go("hentai_irl", hentai_irl_num)
     for ch in hentai_irl_channels:
         sent_msg = post(
             url = f"{BASE_URL}/channels/{ch}/messages",
@@ -127,8 +127,8 @@ if hentai_irl:
 
 #hentai
 if hentai:
-    import hentai
-    links = hentai.go(hentai_num)
+    import reddit_api
+    links = reddit_api.go("hentai", hentai_num)
     for ch in hentai_channels:
         sent_msg = post(
             url = f"{BASE_URL}/channels/{ch}/messages",
