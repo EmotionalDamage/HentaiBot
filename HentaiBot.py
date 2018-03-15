@@ -22,36 +22,20 @@ with open("config.yaml") as file:
     channels = data["channels"]
     num = int(data["posts"])
     hentai_haven = data["hentai_haven"]["enabled"]
-    hentai_irl = data["hentai_irl"]["enabled"]
-    hentai = data["hentai"]["enabled"]
-    if hentai_haven:
-        hentai_haven_num = int(data["hentai_haven"]["posts"])
-        hentai_haven_channels = data["hentai_haven"]["channels"]
-        try:
-            hentai_haven_colour = int(data["hentai_haven"]["embed_colour"])
-        except ValueError:
-            hentai_haven_colour = int(data["hentai_haven"]["embed_colour"], 16)
-        if hentai_haven_colour < 0:
-            hentai_haven_colour = 16711680
-        if len(hentai_haven_channels) == 0:
-            hentai_haven_channels = channels
-    if hentai_irl:
-        hentai_irl_num = int(data["hentai_irl"]["posts"])
-        hentai_irl_channels = data["hentai_irl"]["channels"]
-        if len(hentai_irl_channels) == 0:
-            hentai_irl_channels = channels
-        if hentai_irl_num < 1:
-            hentai_irl_num = num
-    if hentai:
-        hentai_num = int(data["hentai"]["posts"])
-        hentai_channels = data["hentai"]["channels"]
-        if len(hentai_channels) == 0:
-            hentai_channels = channels
-        if hentai_num < 1:
-            hentai_num = num
-    if token == "":
-        print("Error! No token written in the config.yaml file")
-        sysexit()
+if hentai_haven:
+    hentai_haven_num = int(data["hentai_haven"]["posts"])
+    hentai_haven_channels = data["hentai_haven"]["channels"]
+    try:
+        hentai_haven_colour = int(data["hentai_haven"]["embed_colour"])
+    except ValueError:
+        hentai_haven_colour = int(data["hentai_haven"]["embed_colour"], 16)
+    if hentai_haven_colour < 0:
+        hentai_haven_colour = 16711680
+    if len(hentai_haven_channels) == 0:
+        hentai_haven_channels = channels
+if token == "":
+    print("Error! No token written in the config.yaml file")
+    sysexit()
 with open("last_name", encoding='utf-8') as file:
     end_name = file.read()
 
@@ -107,35 +91,26 @@ if hentai_haven:
             with open("last_name", "w", encoding='utf-8') as file:
                     file.write(first_name)
     else:
-        print("No New Entries")
+        print("Info    No New HentaiHaven Entries")
 
-#hentai_irl
-if hentai_irl:
+#Reddit Plugins
+for i in data["reddit"].keys():
     import reddit_api
-    links = reddit_api.go("hentai_irl", hentai_irl_num)
-    for ch in hentai_irl_channels:
+    subred = data["reddit"][i]
+    r_num = subred["posts"]
+    if r_num is None or r_num < 1:
+        r_num = num
+    r_chs = subred["channels"]
+    if r_chs is None or len(r_chs) == 0:
+        r_chs = channels
+    links = reddit_api.go(i, r_num)
+    for ch in r_chs:
         sent_msg = post(
             url = f"{BASE_URL}/channels/{ch}/messages",
             data = jdump({"content":links}),
             headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
         )
-        output = f"To Channel: {ch},    Sent {hentai_irl_num} r/hentai_irl Posts"
-        if sent_msg.ok:
-            print(f"Success!", output)
-        else:
-            print(f"Error!", output)
-
-#hentai
-if hentai:
-    import reddit_api
-    links = reddit_api.go("hentai", hentai_num)
-    for ch in hentai_channels:
-        sent_msg = post(
-            url = f"{BASE_URL}/channels/{ch}/messages",
-            data = jdump({"content":links}),
-            headers = {"Authorization": f"Bot {token}", "Content-Type":"application/json"}
-        )
-        output = f"To Channel: {ch},    Sent {hentai_num} r/hentai Posts"
+        output = f"To Channel: {ch},    Sent {r_num} r/{i} Posts"
         if sent_msg.ok:
             print(f"Success!", output)
         else:
