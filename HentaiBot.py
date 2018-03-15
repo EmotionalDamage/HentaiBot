@@ -114,4 +114,4 @@ for i in data["reddit"].keys():
         if sent_msg.ok:
             print(f"Success!", output)
         else:
-            print(f"Error!", output)
+            print(f"Error!  ", output)
