@@ -1,0 +1,4 @@
+PyYAML==3.12
+requests==2.13.0
+feedparser==5.2.1
+lxml==3.7.2
