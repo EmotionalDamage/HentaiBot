@@ -1,7 +1,9 @@
 # HentaiBot
 Well... a bot that checks HentaiHaven.org for new hentai and if it finds a new one, sends the info as a message to a Discord channel(s)
 
-It uses the RSS feed at www.hentaihaven.org/feed \[WARNING: NSFW] to check for new releases, if it finds a new one then it will send a discord message to the channels specified in the config.yaml file.
+\[WARNING: All Links Are NSFW]
+
+It uses the RSS feed at www.hentaihaven.org/feed to check for new releases, if it finds a new one then it will send a discord message to the channels specified in the config.yaml file.
 
 It can also go on www.reddit.com/r/{subreddit_name} and post the top posts. (By default, it posts the top 3 but this can be changed in the config.yaml file). (e.g. you can post the top posts from [r/hentai_irl](https://www.reddit.com/r/hentai_irl))
 This feature can be added/edited in the config.yaml file.
