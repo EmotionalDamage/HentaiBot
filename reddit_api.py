@@ -1,5 +1,4 @@
 # reddit_api
-from json import load
 from requests import get
 
 def go(subreddit, num=3):
