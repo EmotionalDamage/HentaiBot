@@ -1,4 +1,4 @@
-# Hentai_IRL v1
+# reddit_api
 from json import load
 from requests import get
 
