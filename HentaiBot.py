@@ -13,6 +13,14 @@ def get_from_summary(summary):
     d = f"{root[1].text}\n\n{root[2].text}"
     i = root[0].attrib["src"]
     return (d, i)
+
+def tag_filter(tags, summary):
+    summary = summary.lower()
+    for t in tags:
+        tag = t.lower()
+        if tag in summary:
+            return False
+    return True
 # ---------
 
 def start():
@@ -55,18 +63,19 @@ def start():
             if (x[i]['id'] == end_name) or (counter == hentai_haven_num):
                 break
             else:
-                if len(hentai_haven_black_list) > 0:
-                    for tag in hentai_haven_black_list:
-                        if tag.lower() not in x[i].summary.lower():
-                            new_items.append(x[i])
-                            counter += 1
-                            if first_name == "":
-                                first_name = x[0]['id']
-                else:
+                if tag_filter(hentai_haven_black_list, x[i].summary):
                     new_items.append(x[i])
                     counter += 1
                     if first_name == "":
                         first_name = x[0]['id']
+                # if len(hentai_haven_black_list) > 0:
+                #     for tag in hentai_haven_black_list:
+                #         if tag.lower() not in x[i].summary.lower():
+                # else:
+                #     new_items.append(x[i])
+                #     counter += 1
+                #     if first_name == "":
+                #         first_name = x[0]['id']
 
         #The RSS Items will be turned into embedded objects
         new_embs = []
