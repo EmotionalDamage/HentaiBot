@@ -50,16 +50,23 @@ def start():
         x = feedparser.parse("http://hentaihaven.org/feed").entries
         new_items = [] #All the new items will be appended into this list
         counter = 0 #Max limit of 5 items per post
+        first_name = ""
         for i in range(len(x)):
             if (x[i]['id'] == end_name) or (counter == hentai_haven_num):
                 break
             else:
-                for tag in hentai_haven_black_list:
-                    if tag not in x[i].summary:
-                        new_items.append(x[i])
-                        counter += 1
-                        if i == 0:
-                            first_name = x[0]['id']
+                if len(hentai_haven_black_list) > 0:
+                    for tag in hentai_haven_black_list:
+                        if tag.lower() not in x[i].summary.lower():
+                            new_items.append(x[i])
+                            counter += 1
+                            if first_name == "":
+                                first_name = x[0]['id']
+                else:
+                    new_items.append(x[i])
+                    counter += 1
+                    if first_name == "":
+                        first_name = x[0]['id']                    
 
         #The RSS Items will be turned into embedded objects
         new_embs = []
