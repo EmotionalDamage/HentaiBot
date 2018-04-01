@@ -27,6 +27,8 @@ def start():
         hentai_haven_num = int(data["hentai_haven"]["posts"])
         hentai_haven_channels = data["hentai_haven"]["channels"]
         hentai_haven_black_list = data["hentai_haven"].get("blacklist", [])
+        if hentai_haven_num < 1 or hentai_haven_num is None:
+            hentai_haven_num = num
         try:
             hentai_haven_colour = int(data["hentai_haven"]["embed_colour"])
         except ValueError:
