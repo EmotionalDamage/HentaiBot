@@ -9,9 +9,9 @@ It can also go on www.reddit.com/r/{subreddit_name} and post the top posts. (By 
 This feature can be added/edited in the config.yaml file.
 
 ## Dependencies:
-- feedparser  (For reading the RSS feed)
-- yaml  (For reading and writing to the config file)
-- requests  (For writing a POST request to Discord)
+- [feedparser](https://github.com/kurtmckee/feedparser)  (For reading the RSS feed)
+- [pyYAML](https://github.com/yaml/pyyaml)  (For reading and writing to the config file)
+- [requests](http://python-requests.org)  (For writing a POST request to Discord)
 - json <b>\[Standard Library]</b>  (For writing the information sent to Discord)
 - xml <b>\[Standard Library]</b>  (For reading some of the XML text)
 
@@ -29,3 +29,38 @@ e.g.
 ### 3. If you wish for the program to do it automatically then look into a way of scheduling a task for your specific OS. (For Windows use Task Scheduler, for Linux use Cron(? haven't used Linux a lot)). Then schedule the execution of the "start.bat" script whenever you wish.<p>
 ### 4. If you wish to run the program manually just, run the "start.bat" script.
 - Tip: just create a shortcut of the start.bat and move it in your autostart folder if you use windows. It will always check for new hentai when you start your pc.
+
+## The Config File:
+### The whole bot works depending on what you put in the [config file](https://github.com/HiruNya/HentaiBot/blob/master/config.yaml).
+This is how it starts off as. Feel free to add/edit values that you see fit.
+(Text after the # are counted as comments and wont be read by the bot).
+```yaml
+channels: [] # The channel id that you wish to send this to e.g. channels: ['12345', '64789'] (Quotation Marks Necessary)
+token: # e.g. token: 12345 (No Quotation Marks Necessary)
+posts: 3 # The default number of posts to make
+hentai_haven: {
+  enabled: True, # Set to True if you wish to use the /r/hentai_irl feature
+  posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
+  channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
+  embed_colour: FF0000, # The Hexadecimal (RRGGBB) or Decimal value for the embed colour of the post. (Red by default)
+    # Red = FF0000 or 16711680
+    # Green = 00FF00 or 65280
+    # Blue = 0000FF  or 255 etc.
+  blacklist: [ # A blacklist where you can enter tags that you don't want to appear
+    # e.g.
+    # "netorare",
+    # "cheating", etc. (Tags do not have to be case-sensitive)
+    # In this case videos with the tags "netorare" and "cheating" would not be posted.
+    # Adding "" is probably not required but is recommended especially if you want to block a tag like "Big Boobs", which has a space in the middle.
+  ],
+}
+reddit: { # You can add as many subreddits as you want just make an entry using the template below.  
+  # Example:
+  # Uncomment (remove the hashtags at the start) the text below to make the bot post reddit.com/r/hentai_irl posts
+  # hentai_irl: { # This is the name of the subreddit. e.g. www.reddit.com/r/{subreddit_name}
+  #  posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
+  #  channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
+  # }, <- Remember to add the comma at the end.
+}
+```
+Having trouble with certain settings? Feel free to create an [issue](https://github.com/HiruNya/HentaiBot/issues).
