@@ -5,10 +5,17 @@ hentai_haven: {
   enabled: True, # Set to True if you wish to use the /r/hentai_irl feature
   posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
   channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
-  embed_colour: FF0000 # The Hexadecimal (RRGGBB) or Decimal value for the embed colour of the post. (Red by default)
+  embed_colour: FF0000, # The Hexadecimal (RRGGBB) or Decimal value for the embed colour of the post. (Red by default)
     # Red = FF0000 or 16711680
     # Green = 00FF00 or 65280
     # Blue = 0000FF  or 255 etc.
+  blacklist: [ # A blacklist where you can enter tags that you don't want to appear
+    # e.g.
+    # "netorare",
+    # "cheating", etc. (Tags do not have to be case-sensitive)
+    # In this case videos with the tags "netorare" and "cheating" would not be posted.
+    # Adding "" is probably not required but is recommended especially if you want to block a tag like "Big Boobs", which has a space in the middle.
+  ],
 }
 reddit: { # You can add as many subreddits as you want just make an entry using the template below.  
   # Example:
