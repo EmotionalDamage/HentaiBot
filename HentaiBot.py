@@ -26,6 +26,7 @@ def start():
     if hentai_haven:
         hentai_haven_num = int(data["hentai_haven"]["posts"])
         hentai_haven_channels = data["hentai_haven"]["channels"]
+        hentai_haven_black_list = data["hentai_haven"].get("blacklist", [])
         try:
             hentai_haven_colour = int(data["hentai_haven"]["embed_colour"])
         except ValueError:
@@ -48,7 +49,7 @@ def start():
         new_items = [] #All the new items will be appended into this list
         counter = 0 #Max limit of 5 items per post
         for i in range(len(x)):
-            if (x[i]['id'] == end_name) or (counter == 5):
+            if (x[i]['id'] == end_name) or (counter == hentai_haven_num):
                 break
             else:
                 new_items.append(x[i])
