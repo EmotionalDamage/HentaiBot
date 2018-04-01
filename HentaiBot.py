@@ -54,10 +54,12 @@ def start():
             if (x[i]['id'] == end_name) or (counter == hentai_haven_num):
                 break
             else:
-                new_items.append(x[i])
-                counter += 1
-                if i == 0:
-                    first_name = x[0]['id']
+                for tag in hentai_haven_black_list:
+                    if tag not in x[i].summary:
+                        new_items.append(x[i])
+                        counter += 1
+                        if i == 0:
+                            first_name = x[0]['id']
 
         #The RSS Items will be turned into embedded objects
         new_embs = []
