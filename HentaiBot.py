@@ -66,7 +66,7 @@ def start():
                     new_items.append(x[i])
                     counter += 1
                     if first_name == "":
-                        first_name = x[0]['id']                    
+                        first_name = x[0]['id']
 
         #The RSS Items will be turned into embedded objects
         new_embs = []
