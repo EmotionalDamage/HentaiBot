@@ -63,4 +63,4 @@ reddit: { # You can add as many subreddits as you want just make an entry using 
   # }, <- Remember to add the comma at the end.
 }
 ```
-Having trouble with certain settings? Feel free to create an [issue](https://github.com/HiruNya/HentaiBot/issues).
+Having trouble with certain settings? Want to make a suggestion? Feel free to create an [issue](https://github.com/HiruNya/HentaiBot/issues).
