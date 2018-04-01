@@ -24,9 +24,12 @@ e.g.
 ### 2. Configure the config.yaml by:
   * Adding the token which you obtain by creating your bot with Discord.
   * Add the channel(s) that you wish for you bot to send the message to.
-    <b>NOTE: Your bot must have permission to write in the channel. This done when adding the bot to the Discord server or through roles.</b>
+    <b>NOTE: Your bot must have permission to write in the channel. This is done when adding the bot to the Discord server or through roles.</b>
   * Add any subreddits you wish to use.<p>
 ### 3. If you wish for the program to do it automatically then look into a way of scheduling a task for your specific OS. (For Windows use Task Scheduler, for Linux use Cron(? haven't used Linux a lot)). Then schedule the execution of the "start.bat" script whenever you wish.<p>
+If you don't want to schedule it using the start.bat file or you're on linux then schedule the command ``python -m HentaiBot.py`` instead but be sure to change the working directory to the folder in which this is located in or else you'll get an error due to the bot not being able to find "config.yaml".
+ 
+If you are doing this on Linux then make an [issue](https://github.com/HiruNya/HentaiBot/issues) so that I can make a bash script.
 ### 4. If you wish to run the program manually just, run the "start.bat" script.
 - Tip: just create a shortcut of the start.bat and move it in your autostart folder if you use windows. It will always check for new hentai when you start your pc.
 
