@@ -1,5 +1,5 @@
 # HentaiBot
-Well... a bot that checks HentaiHaven.org for new hentai and if it finds a new one, sends the info as a message to a Discord channel(s)
+ A Discord Bot that posts from HentaiHaven and Reddit Subreddits.
 
 \[WARNING: All Links Are NSFW]
 
