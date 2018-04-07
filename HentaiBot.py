@@ -52,6 +52,7 @@ def start():
     if hanime_tv:
         hanime_tv_num = int(data["hanime_tv"]["posts"])
         hanime_tv_channels = data["hanime_tv"]["channels"]
+        hanime_tv_section = data["hanime_tv"]["section"].lower()
         if hanime_tv_num < 1 or hanime_tv is None:
             hanime_tv_num = num
         try:
@@ -62,6 +63,18 @@ def start():
             hanime_tv_channels = int("FF00FF", 16)
         if len(hanime_tv_channels) == 0:
             hanime_tv_channels = channels
+        if hanime_tv_section == "new releases":
+            from hanime_tv import NEW_RELEASES
+            hanime_tv_section = NEW_RELEASES
+        elif hanime_tv_section == "trending":
+            from hanime_tv import TRENDING
+            hanime_tv_section = TRENDING
+        elif hanime_tv_section == "random":
+            from hanime_tv import RANDOM
+            hanime_tv_section = RANDOM
+        else:
+            from hanime_tv import RECENT_UPLOADS
+            hanime_tv_section = RECENT_UPLOADS
     if token == "":
         print("Error! No token written in the config.yaml file")
         sysexit()
@@ -156,7 +169,7 @@ def start():
     if hanime_tv:
         import hanime_tv
         embeds, first_id = hanime_tv.go(
-            section=hanime_tv.RECENT_UPLOADS,
+            section=hanime_tv_section,
             colour=hanime_tv_colour,
             limit=hanime_tv_num,
             end_name=end_name_ha
@@ -177,7 +190,7 @@ def start():
                     data=jdump({"content": "New Hentai Release", "embed": e}),
                     headers={"Authorization": f"Bot {token}", "Content-Type": "application/json"}
                 )
-                output = f"To Channel: {ch},    Sent {emb_num} HAnime.tv Posts"
+                output = f"To Channel: {ch},    Sent \'{e['title']}\'"
                 if sent_msg.ok:
                     print(f"Success!", output)
                 else:
