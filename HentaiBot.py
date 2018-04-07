@@ -142,29 +142,6 @@ def start():
         else:
             print("Info     No New HentaiHaven Entries")
 
-    # Reddit Plugins
-    for i in data["reddit"].keys():
-        import reddit_api
-        subred = data["reddit"][i]
-        r_num = subred["posts"]
-        if r_num is None or r_num < 1:
-            r_num = num
-        r_chs = subred["channels"]
-        if r_chs is None or len(r_chs) == 0:
-            r_chs = channels
-        links = reddit_api.go(i, r_num)
-        for ch in r_chs:
-            sent_msg = post(
-                url=f"{BASE_URL}/channels/{ch}/messages",
-                data=jdump({"content": links}),
-                headers={"Authorization": f"Bot {token}", "Content-Type": "application/json"}
-            )
-            output = f"To Channel: {ch},    Sent {r_num} r/{i} Posts"
-            if sent_msg.ok:
-                print(f"Success!", output)
-            else:
-                print(f"Error!  ", output)
-
     # HAnime.tv
     if hanime_tv:
         import hanime_tv
@@ -196,6 +173,29 @@ def start():
                 else:
                     print(f"Error!  ", output)
                     print(sent_msg.text)
+
+    # Reddit Plugins
+    for i in data["reddit"].keys():
+        import reddit_api
+        subred = data["reddit"][i]
+        r_num = subred["posts"]
+        if r_num is None or r_num < 1:
+            r_num = num
+        r_chs = subred["channels"]
+        if r_chs is None or len(r_chs) == 0:
+            r_chs = channels
+        links = reddit_api.go(i, r_num)
+        for ch in r_chs:
+            sent_msg = post(
+                url=f"{BASE_URL}/channels/{ch}/messages",
+                data=jdump({"content": links}),
+                headers={"Authorization": f"Bot {token}", "Content-Type": "application/json"}
+            )
+            output = f"To Channel: {ch},    Sent {r_num} r/{i} Posts"
+            if sent_msg.ok:
+                print(f"Success!", output)
+            else:
+                print(f"Error!  ", output)
 
     if change_name_hh or change_name_ha:
         with open("last_name.yaml", "w", encoding='utf-8') as file:
