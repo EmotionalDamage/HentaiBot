@@ -2,7 +2,7 @@ channels: [] # The channel id that you wish to send this to e.g. channels: ['123
 token: # e.g. token: 12345 (No Quotation Marks Necessary)
 posts: 3 # The default number of posts to make
 hentai_haven: {
-  enabled: True, # Set to True if you wish to use the /r/hentai_irl feature
+  enabled: True, # Set to True if you wish to use the HentaiHaven feature
   posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
   channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
   embed_colour: FF0000, # The Hexadecimal (RRGGBB) or Decimal value for the embed colour of the post. (Red by default)
@@ -16,6 +16,18 @@ hentai_haven: {
     # In this case videos with the tags "netorare" and "cheating" would not be posted.
     # Adding "" is probably not required but is recommended especially if you want to block a tag like "Big Boobs", which has a space in the middle.
   ],
+}
+hanime_tv: {
+  enabled: False, # Set to True if you wish to use the HAnime.tv feature
+  posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
+  channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
+  embed_colour: FF00FF, # The Hexadecimal (RRGGBB) or Decimal value for the embed colour of the post. (Purple by default)
+  section: "Recent Uploads" # Which list you want to use. (If you go on the site, you will see multiple lists.)
+  # The sections are: (Case does not matter)
+  # - Recent Uploads
+  # - New Releases
+  # - Trending
+  # - Random
 }
 reddit: { # You can add as many subreddits as you want just make an entry using the template below.  
   # Example:
