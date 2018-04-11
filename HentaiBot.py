@@ -83,8 +83,8 @@ def start():
             end_names = load(file.read())
             end_name_hh = end_names["hh"]
             end_name_ha = end_names["ha"]
+            first_name_hh, first_name_ha = end_name_hh, end_name_ha
     change_name_hh, change_name_ha = False, False
-    first_name_hh, first_name_ha = end_name_hh, end_name_ha
 
 
     # HentaiHaven
@@ -103,6 +103,8 @@ def start():
                     counter += 1
                     if first_name_hh == "":
                         first_name_hh = x[0]['id']
+        if first_name_hh == "":
+            first_name_hh = end_name_hh
 
         # The RSS Items will be turned into embedded objects
         new_embs = []
@@ -154,7 +156,6 @@ def start():
         change_name_ha = first_id[0]
         if change_name_ha:
             first_name_ha = first_id[1]
-            print(first_name_ha)
         else:
             first_name_ha = end_name_ha
         emb_num = len(embeds)
@@ -203,6 +204,10 @@ def start():
                 "hh": first_name_hh,
                 "ha": first_name_ha
             }))
+        if change_name_hh:
+            print(f"Info     HentaiHaven id changed to: {first_name_hh}")
+        if change_name_ha:
+            print(f"Info     Hanime.tv id changed to: {first_name_ha}")
 
 
 if __name__ == "__main__":
