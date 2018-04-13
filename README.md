@@ -5,8 +5,14 @@
 
 It uses the RSS feed at www.hentaihaven.org/feed to check for new releases, if it finds a new one then it will send a discord message to the channels specified in the config.yaml file.
 
-It can also go on www.reddit.com/r/{subreddit_name} and post the top posts. (By default, it posts the top 3 but this can be changed in the config.yaml file). (e.g. you can post the top posts from [r/hentai_irl](https://www.reddit.com/r/hentai_irl))
-This feature can be added/edited in the config.yaml file.
+It also scrapes the staging.hanime.tv website to check for new releases, and does the same as above. You can also choose what list to use (Recent Uploads, Trending, etc.)
+
+It can also go on www.reddit.com/r/{subreddit_name} and post the top posts. (e.g. you can post the top posts from [r/hentai_irl](https://www.reddit.com/r/hentai_irl))
+
+These features can all be edited in the config.yaml file.
+
+For those who first run the program, you may notice that you get an error because you're being 'rate limited'. This just means that since your bot is sending all these posts at the same time, Discord thinks you're spamming and so has decided to block the bot from posting for a few seconds. After waiting for a few seconds, the next time the bot runs should work fine as the bot would have kept a record of all the latest posts it saw and therefore will stop posting when it reaches them.
+If this error keeps popping up a lot make an [issue](https://github.com/HiruNya/HentaiBot/issues) as I might be able to implement a feature that pauses between different kinds of posts to ensure that you don't get rate limited.
 
 ## Dependencies:
 - [feedparser](https://github.com/kurtmckee/feedparser)  (For reading the RSS feed)
@@ -42,7 +48,7 @@ channels: [] # The channel id that you wish to send this to e.g. channels: ['123
 token: # e.g. token: 12345 (No Quotation Marks Necessary)
 posts: 3 # The default number of posts to make
 hentai_haven: {
-  enabled: True, # Set to True if you wish to use the /r/hentai_irl feature
+  enabled: True, # Set to True if you wish to use the HentaiHaven feature
   posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
   channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
   embed_colour: FF0000, # The Hexadecimal (RRGGBB) or Decimal value for the embed colour of the post. (Red by default)
@@ -56,6 +62,18 @@ hentai_haven: {
     # In this case videos with the tags "netorare" and "cheating" would not be posted.
     # Adding "" is probably not required but is recommended especially if you want to block a tag like "Big Boobs", which has a space in the middle.
   ],
+}
+hanime_tv: {
+  enabled: False, # Set to True if you wish to use the HAnime.tv feature
+  posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
+  channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
+  embed_colour: FF00FF, # The Hexadecimal (RRGGBB) or Decimal value for the embed colour of the post. (Purple by default)
+  section: "Recent Uploads" # Which list you want to use. (If you go on the site, you will see multiple lists.)
+  # The sections are: (Case does not matter)
+  # - Recent Uploads
+  # - New Releases
+  # - Trending
+  # - Random
 }
 reddit: { # You can add as many subreddits as you want just make an entry using the template below.  
   # Example:
