@@ -1,11 +1,11 @@
 # HentaiBot
- A Discord Bot that posts from HentaiHaven and Reddit Subreddits.
+A Discord Bot that posts from HentaiHaven, Hanime.tv, and Reddit Subreddits.
 
 \[WARNING: All Links Are NSFW]
 
 It uses the RSS feed at www.hentaihaven.org/feed to check for new releases, if it finds a new one then it will send a discord message to the channels specified in the config.yaml file.
 
-It also scrapes the staging.hanime.tv website to check for new releases, and does the same as above. You can also choose what list to use (Recent Uploads, Trending, etc.)
+It also scrapes the [hanime.tv](https://staging.hanime.tv) website to check for new releases, and does the same as above. You can also choose what list to use (Recent Uploads, Trending, etc.)
 
 It can also go on www.reddit.com/r/{subreddit_name} and post the top posts. (e.g. you can post the top posts from [r/hentai_irl](https://www.reddit.com/r/hentai_irl))
 
