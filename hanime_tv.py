@@ -64,8 +64,8 @@ def embed_format(videos, embed_colour):
             seconds = "??"
         try:
             desc = "Duration:".ljust(COL) + f"{minutes}:{seconds}\n"
-            desc += "Subbed:".ljust(COL) + (if v["subbed"] "Yes" else "No")+ "\n"
-            desc += "Censored:".ljust(COL) + (if v["censored"] "Yes" else "No")
+            desc += "Subbed:".ljust(COL) + ("Yes" if v["subbed"] else "No")+ "\n"
+            desc += "Censored:".ljust(COL) + ("Yes" if v["censored"] else "No")
         except:
             desc = ""
         output.append({

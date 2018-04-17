@@ -1,3 +1,4 @@
 @echo off
-cd %~dp0
+pushd %~dp0
 python hentaibot.py
+popd
