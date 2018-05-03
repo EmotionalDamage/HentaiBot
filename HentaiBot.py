@@ -12,7 +12,7 @@ BASE_URL = "https://discordapp.com/api"
 def get_from_summary(summary):
     root = ET.fromstring(f"<element>{summary}</element>")
     d = f"{root[1].text}\n\n{root[2].text}"
-    i = root[0].attrib["src"]
+    i = root[0][0].attrib["src"]
     return d, i
 
 

@@ -46,7 +46,6 @@ def go(section=RECENT_UPLOADS, limit=5, end_name=0, colour=0):
             break
     if first_video != end_name:
         end_video_changed = True
-        print("Changed")
     else:
         end_video_changed = False
     return embed_format(output, colour), (end_video_changed, first_video)
