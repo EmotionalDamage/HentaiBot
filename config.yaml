@@ -1,6 +1,8 @@
 channels: [] # The channel id that you wish to send this to e.g. channels: ['12345', '64789'] (Quotation Marks Necessary)
 token: # e.g. token: 12345 (No Quotation Marks Necessary)
 posts: 3 # The default number of posts to make
+# Uncomment the following line to add your own custom message.
+# message: "A new custom message!" # The message that the bot posts alongside the new hentai releases. By default it is "New Hentai Release".
 hentai_haven: {
   enabled: True, # Set to True if you wish to use the HentaiHaven feature
   posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
