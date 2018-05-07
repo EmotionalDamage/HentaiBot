@@ -33,6 +33,7 @@ def start():
         token = str(data["token"])
         channels = data["channels"]
         num = int(data["posts"])
+        custom_message = data.get("message", "")
         hentai_haven = data["hentai_haven"]["enabled"]
         hanime_tv = data["hanime_tv"]["enabled"]
     if hentai_haven:
@@ -78,6 +79,8 @@ def start():
     if token == "":
         print("Error! No token written in the config.yaml file")
         sysexit()
+    if custom_message == "":
+        custom_message = "New Hentai Release!"
     if hentai_haven or hanime_tv:
         with open("last_name.yaml", encoding='utf-8') as file:
             end_names = load(file.read())
@@ -128,7 +131,7 @@ def start():
                 for emb in new_embs:
                     sent_msg = post(
                         url=f"{BASE_URL}/channels/{ch}/messages",
-                        data=jdump({"content": "New Hentai Release!", "embed": emb}),
+                        data=jdump({"content": custom_message, "embed": emb}),
                         headers={"Authorization": f"Bot {token}", "Content-Type": "application/json"}
                     )
                     output = f"To Channel: {ch},    Sent \'{emb['title']}\'"
@@ -165,7 +168,7 @@ def start():
             for ch in hanime_tv_channels:
                 sent_msg = post(
                     url=f"{BASE_URL}/channels/{ch}/messages",
-                    data=jdump({"content": "New Hentai Release", "embed": e}),
+                    data=jdump({"content": custom_message, "embed": e}),
                     headers={"Authorization": f"Bot {token}", "Content-Type": "application/json"}
                 )
                 output = f"To Channel: {ch},    Sent \'{e['title']}\'"
