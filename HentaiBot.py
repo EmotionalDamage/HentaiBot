@@ -47,7 +47,7 @@ def start():
         except ValueError:
             hentai_haven_colour = int(data["hentai_haven"]["embed_colour"], 16)
         if hentai_haven_colour < 0:
-            hentai_haven_colour =
+            hentai_haven_colour = 16711680
         if len(hentai_haven_channels) == 0:
             hentai_haven_channels = channels
     if hanime_tv:
