@@ -30,34 +30,34 @@ def start():
     # Get data from config file
     with open("config.yaml") as file:
         data = load(file)
-        token = str(data["token"])
-        channels = data["channels"]
-        num = int(data["posts"])
+        token = str(data.get("token", ""))
+        channels = data.get("channels", [])
+        num = int(data.get("posts", 3))
         custom_message = data.get("message", "")
-        hentai_haven = data["hentai_haven"]["enabled"]
-        hanime_tv = data["hanime_tv"]["enabled"]
+        hentai_haven = data.get("hentai_haven", {"enabled": False}).get("enabled", False)
+        hanime_tv = data.get("hanime_tv", {"enabled": False}).get("enabled", False)
     if hentai_haven:
-        hentai_haven_num = int(data["hentai_haven"]["posts"])
-        hentai_haven_channels = data["hentai_haven"]["channels"]
+        hentai_haven_num = int(data["hentai_haven"].get("posts", num))
+        hentai_haven_channels = data["hentai_haven"].get("channels", channels)
         hentai_haven_black_list = data["hentai_haven"].get("blacklist", [])
         if hentai_haven_num < 1 or hentai_haven_num is None:
             hentai_haven_num = num
         try:
-            hentai_haven_colour = int(data["hentai_haven"]["embed_colour"])
+            hentai_haven_colour = int(data["hentai_haven"].get("embed_colour", 16711680))
         except ValueError:
             hentai_haven_colour = int(data["hentai_haven"]["embed_colour"], 16)
         if hentai_haven_colour < 0:
-            hentai_haven_colour = 16711680
+            hentai_haven_colour =
         if len(hentai_haven_channels) == 0:
             hentai_haven_channels = channels
     if hanime_tv:
-        hanime_tv_num = int(data["hanime_tv"]["posts"])
-        hanime_tv_channels = data["hanime_tv"]["channels"]
-        hanime_tv_section = data["hanime_tv"]["section"].lower()
+        hanime_tv_num = int(data["hanime_tv"].get("posts", num))
+        hanime_tv_channels = data["hanime_tv"].get("channels", channels)
+        hanime_tv_section = data["hanime_tv"].get("section", "").lower()
         if hanime_tv_num < 1 or hanime_tv is None:
             hanime_tv_num = num
         try:
-            hanime_tv_colour = int(data["hanime_tv"]["embed_colour"])
+            hanime_tv_colour = int(data["hanime_tv"].get("embed_colour", int("FF00FF", 16)))
         except ValueError:
             hanime_tv_colour = int(data["hanime_tv"]["embed_colour"], 16)
         if hanime_tv_colour < 0:
