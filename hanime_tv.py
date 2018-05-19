@@ -56,6 +56,7 @@ def embed_format(videos, embed_colour):
     output = []
     for v in videos:
         try:
+            if v["duration"] == 0: raise AttributeError
             minutes = floor(v["duration"] / 60_000)
             seconds = floor((v["duration"] % 60_000) / 1_000)
         except:
