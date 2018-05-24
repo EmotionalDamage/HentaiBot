@@ -1,10 +1,11 @@
-# HentaiBot v2
+# HentaiBot v2 ~ AWS
+import boto3
 import feedparser
+import xml.etree.ElementTree as ET
 from yaml import load, dump
 from json import dumps as jdump
-from requests import post
-from sys import exit as sysexit
-import xml.etree.ElementTree as ET
+from requests import get, post
+import os
 BASE_URL = "https://discordapp.com/api"
 
 
@@ -28,14 +29,20 @@ def tag_filter(tags, summary):
 
 def start():
     # Get data from config file
-    with open("config.yaml") as file:
-        data = load(file)
-        token = str(data["token"])
-        channels = data["channels"]
-        num = int(data["posts"])
-        custom_message = data.get("message", "")
-        hentai_haven = data["hentai_haven"]["enabled"]
-        hanime_tv = data["hanime_tv"]["enabled"]
+    db = boto3.resource('dynamodb', region_name="us-west-2")
+    table = db.Table('personal')
+    request = get("https://hirunya.github.io/misc/hentai_config.yaml")
+    if request.ok:
+        data = load(request.text)
+    else:
+        print("Error obtaining config file!")
+        return None
+    token = os.environ["token"]
+    channels = data["channels"]
+    num = int(data["posts"])
+    custom_message = data.get("message", "")
+    hentai_haven = data["hentai_haven"]["enabled"]
+    hanime_tv = data["hanime_tv"]["enabled"]
     if hentai_haven:
         hentai_haven_num = int(data["hentai_haven"]["posts"])
         hentai_haven_channels = data["hentai_haven"]["channels"]
@@ -78,15 +85,15 @@ def start():
             hanime_tv_section = RECENT_UPLOADS
     if token == "":
         print("Error! No token written in the config.yaml file")
-        sysexit()
+        return None
     if custom_message == "":
         custom_message = "New Hentai Release!"
     if hentai_haven or hanime_tv:
-        with open("last_name.yaml", encoding='utf-8') as file:
-            end_names = load(file.read())
-            end_name_hh = end_names["hh"]
-            end_name_ha = end_names["ha"]
-            first_name_hh, first_name_ha = end_name_hh, end_name_ha
+        request = table.get_item( Key = {'k': 'hentaibot'} )
+        end_names = request["Item"]
+        end_name_hh = end_names["hh"]
+        end_name_ha = int(end_names["ha"])
+        first_name_hh, first_name_ha = end_name_hh, end_name_ha
     change_name_hh, change_name_ha = False, False
 
 
@@ -201,16 +208,18 @@ def start():
             else:
                 print(f"Error!  ", output)
 
-    if change_name_hh or change_name_ha:
-        with open("last_name.yaml", "w", encoding='utf-8') as file:
-            file.write(dump({
-                "hh": first_name_hh,
-                "ha": first_name_ha
-            }))
-        if change_name_hh:
-            print(f"Info     HentaiHaven id changed to: {first_name_hh}")
-        if change_name_ha:
-            print(f"Info     Hanime.tv id changed to: {first_name_ha}")
+    if change_name_hh:
+        table.update_item(
+            Key={'k':'hentaibot'},
+            UpdateExpression=f"SET hh = {first_name_hh}"
+        )
+        print(f"Info     HentaiHaven id changed to: {first_name_hh}")
+    if change_name_ha:
+        table.update_item(
+            Key={'k':'hentaibot'},
+            UpdateExpression=f"SET ha = {int(first_name_ha)}"
+        )
+        print(f"Info     Hanime.tv id changed to: {first_name_ha}")
 
 
 if __name__ == "__main__":

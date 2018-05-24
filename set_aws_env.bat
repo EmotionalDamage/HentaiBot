@@ -1,0 +1,1 @@
+set BOTO_CONFIG=boto.config
