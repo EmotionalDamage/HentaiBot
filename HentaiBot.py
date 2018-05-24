@@ -8,6 +8,9 @@ from requests import get, post
 import os
 BASE_URL = "https://discordapp.com/api"
 
+def lambda_handler(event, context):
+    start()
+    return "Completed"
 
 #  ---------
 def get_from_summary(summary):
