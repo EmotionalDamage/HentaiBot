@@ -7,10 +7,39 @@ from json import dumps as jdump
 from requests import get, post
 import os
 BASE_URL = "https://discordapp.com/api"
+log = '''
+<!doctype html>
+<html>
+ <head>
+  <title>HentaiBot</title>
+  <style>
+   body {
+     background-color: black;
+     padding: 20px;
+   }
+   .e {
+     color: red;
+   }
+   .s {
+     color: green;
+   }
+   .i {
+     color: orange;
+   }
+  </style>
+ </head>
+ <body>
+'''
 
 def lambda_handler(event, context):
+    global log
     start()
-    return "Completed"
+    log += "</body></html>"
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "text/html"},
+        "body": log,
+    }
 
 #  ---------
 def get_from_summary(summary):
@@ -31,6 +60,7 @@ def tag_filter(tags, summary):
 
 
 def start():
+    global log
     # Get data from config file
     db = boto3.resource('dynamodb', region_name="us-west-2")
     table = db.Table('personal')
@@ -38,7 +68,7 @@ def start():
     if request.ok:
         data = load(request.text)
     else:
-        print("Error obtaining config file!")
+        log += '<p class="e">Error obtaining config file!</p>'
         return None
     token = os.environ["token"]
     channels = data["channels"]
@@ -87,7 +117,7 @@ def start():
             from hanime_tv import RECENT_UPLOADS
             hanime_tv_section = RECENT_UPLOADS
     if token == "":
-        print("Error! No token written in the config.yaml file")
+        log += "<p class='e'>Error! No token written in the config.yaml file</p>"
         return None
     if custom_message == "":
         custom_message = "New Hentai Release!"
@@ -146,16 +176,16 @@ def start():
                     )
                     output = f"To Channel: {ch},    Sent \'{emb['title']}\'"
                     if sent_msg.ok:
-                        print("Success!", output)
+                        log += f"<p class='s'>Success! {output}</p>"
                     else:
-                        print("Error!", output)
-                        print(sent_msg.text)
+                        log += f"<p class='r'>Error!   {output}<br>"
+                        log += f"{sent_msg.text}</p>"
 
             # Update config with the newest item
             if first_name_hh != end_name_hh:
                 change_name_hh = True
         else:
-            print("Info     No New HentaiHaven Entries")
+            log += "<p class='i'>Info     No New HentaiHaven Entries</p>"
 
     # HAnime.tv
     if hanime_tv:
@@ -173,7 +203,7 @@ def start():
             first_name_ha = end_name_ha
         emb_num = len(embeds)
         if emb_num == 0:
-            print("Info     No New HAnime.tv Entries")
+            log += "<p class='i'>Info     No New HAnime.tv Entries</p>"
         for e in embeds:
             for ch in hanime_tv_channels:
                 sent_msg = post(
@@ -183,10 +213,10 @@ def start():
                 )
                 output = f"To Channel: {ch},    Sent \'{e['title']}\'"
                 if sent_msg.ok:
-                    print(f"Success!", output)
+                    log += f"<p class='s'>Success! {output}</p>"
                 else:
-                    print(f"Error!  ", output)
-                    print(sent_msg.text)
+                    log += f"<p class='e'>Error!   {output}<br>"
+                    log += f"{sent_msg.text}</p>"
 
     # Reddit Plugins
     for i in data["reddit"].keys():
@@ -207,22 +237,28 @@ def start():
             )
             output = f"To Channel: {ch},    Sent {r_num} r/{i} Posts"
             if sent_msg.ok:
-                print(f"Success!", output)
+                log += f"<p class='s'>Success! {output}</p>"
             else:
-                print(f"Error!  ", output)
+                log += f"<p class='e'>Error!   {output}</p>"
 
     if change_name_hh:
         table.update_item(
             Key={'k':'hentaibot'},
-            UpdateExpression=f"SET hh = {first_name_hh}"
+            UpdateExpression=f"SET hh = :val",
+            ExpressionAttributeValues={
+                ':val': first_name_hh
+            }
         )
-        print(f"Info     HentaiHaven id changed to: {first_name_hh}")
+        log += f"<p class='i'>Info     HentaiHaven id changed to: {first_name_hh}</p>"
     if change_name_ha:
         table.update_item(
             Key={'k':'hentaibot'},
-            UpdateExpression=f"SET ha = {int(first_name_ha)}"
+            UpdateExpression=f"SET ha = :val",
+            ExpressionAttributeValues={
+                ':val': int(first_name_ha)
+            }
         )
-        print(f"Info     Hanime.tv id changed to: {first_name_ha}")
+        log += f"<p class='i'>Info     Hanime.tv id changed to: {first_name_ha}</p>"
 
 
 if __name__ == "__main__":
