@@ -55,14 +55,15 @@ def embed_format(videos, embed_colour):
     COL = 12
     output = []
     for v in videos:
+        desc = ""
         try:
+            if v["duration"] == 0: raise AttributeError
             minutes = floor(v["duration"] / 60_000)
             seconds = floor((v["duration"] % 60_000) / 1_000)
+            desc = "Duration:".ljust(COL) + f"{minutes}:{seconds:02d}\n"
         except:
-            minutes = "??"
-            seconds = "??"
+            desc = "Duration:".ljust(COL) + "??:??\n"
         try:
-            desc = "Duration:".ljust(COL) + f"{minutes}:{seconds}\n"
             desc += "Subbed:".ljust(COL) + ("Yes" if v["subbed"] else "No")+ "\n"
             desc += "Censored:".ljust(COL) + ("Yes" if v["censored"] else "No")
         except:
@@ -90,17 +91,16 @@ def map_list(video_list):
 
 
 if __name__ == "__main__":
-    result = go()
+    COL = 14
+    (result, _) = go()
     if result is not None:
         for i in result:
             print("====================")
-            print(i["name"])
-            print(i["id"])
-            print(i["url"])
-            print(i["image"])
-            print(i["subbed"])
-            print(i["censored"])
-            print(i["duration"])
+            print("Title:".ljust(COL) + i["title"])
+            print("Description:".ljust(COL) + ("\n" + " "*COL).join((i["description"]).split("\n")))
+            print("URL:".ljust(COL) + i["url"])
+            print("Thumbnail:".ljust(COL) + i["thumbnail"]["url"])
+            print("Image:".ljust(COL) + i["image"]["url"])
             print("====================")
     else:
         print(result.content)
