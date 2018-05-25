@@ -1,5 +1,9 @@
 # HentaiBot
-A Discord Bot that posts from HentaiHaven, Hanime.tv, and Reddit Subreddits.
+A Discord Bot that posts from HentaiHaven, Hanime.tv, and Reddit Subreddits. This branch runs on AWS.
+
+## Note: (for only this branch)
+This specific branch is meant to be able to run on AWS (Amazon Web Services). This requires access to DynamoDb and runs as an AWS Lambda.
+If you would like to know how to set this up (as this was only meant for me), please make an issue and I'll try help you. Changes in the code WILL be needed to get this working for you as I can't be bothered making some special API like I did with the original version. This is meant to be used with a HTTPs trigger and it will return info as a HTML file.
 
 \[WARNING: All Links Are NSFW]
 
@@ -34,7 +38,7 @@ e.g.
   * Add any subreddits you wish to use.<p>
 ### 3. If you wish for the program to do it automatically then look into a way of scheduling a task for your specific OS. (For Windows use Task Scheduler, for Linux use Cron(? haven't used Linux a lot)). Then schedule the execution of the "start.bat" script whenever you wish.<p>
 If you don't want to schedule it using the start.bat file or you're on linux then schedule the command ``python -m HentaiBot.py`` instead but be sure to change the working directory to the folder in which this is located in or else you'll get an error due to the bot not being able to find "config.yaml".
- 
+
 If you are doing this on Linux then make an [issue](https://github.com/HiruNya/HentaiBot/issues) so that I can make a bash script.
 ### 4. If you wish to run the program manually just, run the "start.bat" script.
 - Tip: just create a shortcut of the start.bat and move it in your autostart folder if you use windows. It will always check for new hentai when you start your pc.
