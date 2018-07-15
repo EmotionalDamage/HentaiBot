@@ -3,7 +3,7 @@ from requests import get
 from json import loads
 from math import floor
 
-URL = "https://staging.hanime.tv"
+URL = "https://hanime.tv"
 RECENT_UPLOADS = 0
 NEW_RELEASES = 1
 TRENDING = 2
