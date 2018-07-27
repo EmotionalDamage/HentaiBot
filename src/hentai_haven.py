@@ -27,15 +27,16 @@ def go(discord: Discord, config: HentaiHavenConfig, last_entry: LastEntry):
     items = parse("http://hentaihaven.org/feed").entries
     new_items = []
     counter: int = 0
-    first_name_hh: Optional[str] = None
+    first_name_hh: Optional[int] = None
     for item in items:
-        if (item['id'] == last_entry.hh) or (counter == config.posts):
+        id_: int = int(item['id'].replace("http://hentaihaven.org/?p=", ""))
+        if (id_ == last_entry.hh) or (counter == config.posts):
             break
         elif tag_filter(config.black_list, item.summary):
             new_items.append(item)
             counter += 1
             if first_name_hh is None:
-                first_name_hh = item['id']
+                first_name_hh = id_
     if first_name_hh is not None:
         last_entry.hh = first_name_hh
 

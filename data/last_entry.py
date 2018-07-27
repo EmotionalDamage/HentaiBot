@@ -6,9 +6,9 @@ class LastEntry:
         with open(path, mode="r") as file:
             data = load(file)
         self.path: str = path
-        self.hh: str = data.get("hh", "")
+        self.hh: int = data.get("hh", 0)
         self.ha: int = data.get("ha", 0)
-        self.hh_before: str = self.hh
+        self.hh_before: int = self.hh
         self.ha_before: int = self.ha
 
     def write(self):

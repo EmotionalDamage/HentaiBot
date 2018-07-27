@@ -65,11 +65,11 @@ def go(discord: Discord, config: HAnimeConfig, last_entry: LastEntry):
                 content=config.message,
                 embed=e
             )
-            output = f"To Channel: {ch},    Sent \'{e['title']}\'"
+            msg: str = f"To Channel: {ch},    Sent \'{e['title']}\'"
             if sent_msg.ok:
-                print(f"Success!", output)
+                print(f"Success!", msg)
             else:
-                print(f"Error!  ", output)
+                print(f"Error!  ", msg)
                 print(sent_msg.text)
 
 
