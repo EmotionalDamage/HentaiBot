@@ -12,7 +12,10 @@ class LastEntry:
         self.ha_before: int = self.ha
 
     def write(self):
-        if (self.hh != self.hh_before) or (self.ha != self.ha_before):
+        delta_hh = self.hh != self.hh_before
+        delta_ha = self.ha != self.ha_before
+
+        if delta_hh or delta_ha:
             with open(self.path, mode="w") as file:
                 file.write(
                     dump({
@@ -20,3 +23,8 @@ class LastEntry:
                         "ha": self.ha,
                     })
                 )
+
+        if delta_hh:
+            print(f"Info     HentaiHaven id changed to: {self.hh}")
+        if delta_hh:
+            print(f"Info     Hanime.tv id changed to: {self.ha}")

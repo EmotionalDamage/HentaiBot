@@ -1,0 +1,18 @@
+channels: ['193645956665704449']
+token: MTkzNjQzMjQyODcxNDU1NzQ0.DAg9Xw.i3Em1THlQMSbHAA2eZzT43i_LIo
+posts: 3
+message: "Alakazam!"
+hentai_haven: {
+  enabled: True,
+  embed_colour: FF0000,
+}
+hanime_tv: {
+  enabled: True,
+  embed_colour: FF00FF,
+  section: "Recent Uploads"
+}
+reddit: {
+  hentai_irl: {
+    channels: ['193645956665704449'],
+  },
+}

@@ -1,22 +1,37 @@
 from requests import get
 from json import loads
 from math import floor
-from enum import Enum
+from threading import Thread
 from .discord import Discord
-from data import HAnimeConfig, LastEntry
+from data import HAnimeConfig, LastEntry, Section
 
 HANIME_URL = "https://hanime.tv"
 COL = 12
+
+
+class HAnime(Thread):
+    def __init__(self, discord: Discord, config: HAnimeConfig, last_entry: LastEntry) -> None:
+        self.discord = discord
+        self.config = config
+        self.last_entry = last_entry
+        Thread.__init__(self)
+
+    def run(self):
+        go(
+            discord=self.discord,
+            config=self.config,
+            last_entry=self.last_entry
+        )
 
 
 def go(discord: Discord, config: HAnimeConfig, last_entry: LastEntry):
     response = get(HANIME_URL)
     if not response.ok:
         return None
-    _, response = response.text.split("__NUXT__=")
-    response, _ = response.split(";")
-    response = loads(response)
-    root = response["state"]["data"]["landing"]
+    _, src = response.text.split("__NUXT__=")
+    src, _ = src.split(";")
+    data = loads(src)
+    root = data["state"]["data"]["landing"]
     hentai_list = root["sections"][int(config.section)]["hentai_video_ids"]
     video_list = {i['id']: i for i in root["hentai_videos"]}
     output = []
@@ -42,21 +57,20 @@ def go(discord: Discord, config: HAnimeConfig, last_entry: LastEntry):
             break
     embs = embed_format(output, config.embed_colour)
     if len(embs) == 0:
-        print("Info     No New HAnime.tv Entries")
+        print("Info     No New HAnime Entries")
     for e in embs:
         for ch in config.channels:
-            with discord:
-                sent_msg = discord.send_msg(
-                    channel=ch,
-                    content=config.message,
-                    embed=e
-                )
-                output = f"To Channel: {ch},    Sent \'{e['title']}\'"
-                if sent_msg.ok:
-                    print(f"Success!", output)
-                else:
-                    print(f"Error!  ", output)
-                    print(sent_msg.text)
+            sent_msg = discord.send_msg(
+                channel=ch,
+                content=config.message,
+                embed=e
+            )
+            output = f"To Channel: {ch},    Sent \'{e['title']}\'"
+            if sent_msg.ok:
+                print(f"Success!", output)
+            else:
+                print(f"Error!  ", output)
+                print(sent_msg.text)
 
 
 def embed_format(videos, embed_colour):
@@ -88,13 +102,3 @@ def embed_format(videos, embed_colour):
             },
         })
     return output
-
-
-class Section(Enum):
-    RECENT_UPLOADS = 0
-    NEW_RELEASES = 1
-    TRENDING = 2
-    RANDOM = 3
-
-    def __int__(self) -> int:
-        return self.value

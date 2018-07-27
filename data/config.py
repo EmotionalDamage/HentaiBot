@@ -1,9 +1,10 @@
 from yaml import load
+from enum import Enum
 from typing import List
 from sys import exit as sys_exit
-from src import Section
 
 DEFAULT_HH_COLOUR: int = 16711680
+DEFAULT_HA_COLOUR: int = 16711935
 
 
 class Config:
@@ -21,6 +22,7 @@ class Config:
         self.posts: int = int(data.get("posts", 3))
         self.message: str = str(data.get("message", "New Hentai Release"))
         self.hentai_haven: HentaiHavenConfig = HentaiHavenConfig(self, data.get("hentai_haven", {}))
+        self.hanime: HAnimeConfig = HAnimeConfig(self, data.get("hanime", {}))
         self.reddit: List[RedditConfig] = [RedditConfig(self, name, item) for (name, item) in data.get("reddit", {}).items()]
 
 
@@ -48,12 +50,12 @@ class HAnimeConfig:
         self.channels: List[str] = [str(i) for i in data.get("channels", parent.channels)]
         if len(self.channels) == 0:
             self.channels = parent.channels
-        self.embed_colour: int = parse_colour(data.get("embed_colour", DEFAULT_HH_COLOUR), DEFAULT_HH_COLOUR)  # Default: Red
-        self.section: Section = section_from_str(data.get("section"), Section.RECENT_UPLOADS)
+        self.embed_colour: int = parse_colour(data.get("embed_colour", DEFAULT_HA_COLOUR), DEFAULT_HA_COLOUR)  # Default: Purple
+        self.section: Section = section_from_str(data.get("section", ""), Section.RECENT_UPLOADS)
 
 
 class RedditConfig:
-    def __init__(self, parent: Config, name: str, data):
+    def __init__(self, parent: Config, name: str, data) -> None:
         self.name: str = name
         self.posts: int = data.get("posts", parent.posts)
         self.channels: List[str] = [str(i) for i in data.get("channels", parent.channels)]
@@ -73,6 +75,16 @@ def parse_colour(data, default: int) -> int:
     if col < 0:
         col = default
     return col
+
+
+class Section(Enum):
+    RECENT_UPLOADS = 0
+    NEW_RELEASES = 1
+    TRENDING = 2
+    RANDOM = 3
+
+    def __int__(self) -> int:
+        return self.value
 
 
 def section_from_str(text: str, default: Section) -> Section:

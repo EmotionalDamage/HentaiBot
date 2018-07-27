@@ -40,6 +40,6 @@ class Discord:
                 data=dumps(data),
                 headers={"Authorization": f"Bot {self.token}", "Content-Type": "application/json"}
             )
-            self.reset_remaining = response.headers["X-RateLimit-Remaining"]
-            self.reset_time = response.headers["X-RateLimit-Reset"]
+            self.reset_remaining = int(response.headers["X-RateLimit-Remaining"])
+            self.reset_time = int(response.headers["X-RateLimit-Reset"])
         return response
