@@ -1,5 +1,5 @@
 __pycache__
-__mypycache__
+.mypy_cache
 __*__
 *.backup
 profiler*
