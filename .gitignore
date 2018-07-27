@@ -1,4 +1,6 @@
 __pycache__
+__mypycache__
+__*__
 *.backup
 profiler*
 .idea
