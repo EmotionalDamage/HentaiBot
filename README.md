@@ -67,7 +67,7 @@ hentai_haven: {
     # Adding "" is probably not required but is recommended especially if you want to block a tag like "Big Boobs", which has a space in the middle.
   ],
 }
-hanime_tv: {
+hanime: {
   enabled: False, # Set to True if you wish to use the HAnime.tv feature
 #  posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
 #  channels: [],
