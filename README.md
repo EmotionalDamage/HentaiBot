@@ -44,15 +44,17 @@ If you are doing this on Linux then make an [issue](https://github.com/HiruNya/H
 This is how it starts off as. Feel free to add/edit values that you see fit.
 (Text after the # are counted as comments and wont be read by the bot).
 ```yaml
-channels: [] # The channel id that you wish to send this to e.g. channels: ['12345', '64789'] (Quotation Marks Necessary)
-token: # e.g. token: 12345 (No Quotation Marks Necessary)
+# The only values that are required to be found in this config file is `channels` and `token`.
+# The other values can be removed to use their default values.
+# You may uncomment some of the lines if you wish to set a certain value.
+channels: [] # The channel id that you wish to send this to e.g. channels: ['12345', '64789']
+token: "" # e.g. token: 12345 (No Quotation Marks Necessary)
 posts: 3 # The default number of posts to make
-# Uncomment the following line to add your own custom message.
-# message: "A new custom message!" # The message that the bot posts alongside the new hentai releases. By default it is "New Hentai Release".
+message: "New Hentai Release!" # The message that the bot posts alongside the new hentai releases. By default it is "New Hentai Release".
 hentai_haven: {
   enabled: True, # Set to True if you wish to use the HentaiHaven feature
-  posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
-  channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
+#  posts: 0,
+#  channels: [],
   embed_colour: FF0000, # The Hexadecimal (RRGGBB) or Decimal value for the embed colour of the post. (Red by default)
     # Red = FF0000 or 16711680
     # Green = 00FF00 or 65280
@@ -65,10 +67,10 @@ hentai_haven: {
     # Adding "" is probably not required but is recommended especially if you want to block a tag like "Big Boobs", which has a space in the middle.
   ],
 }
-hanime_tv: {
+hanime: {
   enabled: False, # Set to True if you wish to use the HAnime.tv feature
-  posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
-  channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
+#  posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
+#  channels: [],
   embed_colour: FF00FF, # The Hexadecimal (RRGGBB) or Decimal value for the embed colour of the post. (Purple by default)
   section: "Recent Uploads" # Which list you want to use. (If you go on the site, you will see multiple lists.)
   # The sections are: (Case does not matter)
@@ -82,7 +84,7 @@ reddit: { # You can add as many subreddits as you want just make an entry using 
   # Uncomment (remove the hashtags at the start) the text below to make the bot post reddit.com/r/hentai_irl posts
   # hentai_irl: { # This is the name of the subreddit. e.g. www.reddit.com/r/{subreddit_name}
   #  posts: 0, # Number of posts to post, if the value is below 1 then it will use the default post number
-  #  channels: [], # The channels in the same format as above. Leave empty if you wish to use the same channels.
+  #  channels: [],
   # }, <- Remember to add the comma at the end.
 }
 ```
