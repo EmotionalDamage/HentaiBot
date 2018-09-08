@@ -39,7 +39,7 @@ def go(discord: Discord, config: HAnimeConfig, last_entry: LastEntry):
         if i < config.posts:
             id_ = hentai_list[i]
             video = video_list[id_]
-            if id_ == last_entry.ha:
+            if id_ == last_entry.ha_before:
                 break
             elif i == 0:
                 last_entry.ha = id_
