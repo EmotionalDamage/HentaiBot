@@ -29,7 +29,7 @@ def go(discord: Discord, config: HAnimeConfig, last_entry: LastEntry):
     if not response.ok:
         return None
     _, src = response.text.split("__NUXT__=")
-    src, _ = src.split(";")
+    src, _ = src.split(";</script>")
     data = loads(src)
     root = data["state"]["data"]["landing"]
     hentai_list = root["sections"][int(config.section)]["hentai_video_ids"]
