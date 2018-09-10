@@ -12,7 +12,7 @@ class HentaiHaven(Thread):
         self.discord = discord
         self.config = config
         self.last_entry = last_entry
-        Thread.__init__(self)
+        Thread.__init__(self, name="HentaiHaven")
 
     def run(self):
         go(

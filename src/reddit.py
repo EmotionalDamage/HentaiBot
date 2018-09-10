@@ -9,7 +9,7 @@ class Reddit(Thread):
     def __init__(self, discord: Discord, config: RedditConfig) -> None:
         self.discord = discord
         self.config = config
-        Thread.__init__(self)
+        Thread.__init__(self, name="Reddit")
 
     def run(self):
         go(
